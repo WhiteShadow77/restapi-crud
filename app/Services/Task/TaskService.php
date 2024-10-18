@@ -3,6 +3,7 @@
 namespace App\Services\Task;
 
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskResourceCollection;
 use App\Models\Task;
@@ -32,9 +33,13 @@ class TaskService implements TaskResourceControllerInterface
         //
     }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        //
+        Task::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+        return $this->responseService->successResponse('Task created', 201);
     }
 
     public function show(string $id)

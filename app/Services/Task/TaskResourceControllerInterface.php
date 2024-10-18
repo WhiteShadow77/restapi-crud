@@ -3,6 +3,7 @@
 
 namespace App\Services\Task;
 
+use App\Http\Requests\StoreTaskRequest;
 use Illuminate\Http\Request;
 
 
@@ -12,7 +13,7 @@ interface TaskResourceControllerInterface
 
     public function create();
 
-    public function store(Request $request);
+    public function store(StoreTaskRequest $request);
 
     public function show(string $id);
 

@@ -16,12 +16,12 @@ private array  $responseData;
         }
     }
 
-    public function successResponse(?string $message = null)
+    public function successResponse(?string $message = null, ?int $code = null)
     {
         $this->responseData['status'] = 'success';
         $this->setMessageFieldIfNotNull($message);
 
-        return response()->json($this->responseData);
+        return response()->json($this->responseData, $code ?? 200);
     }
 
     public function errorResponse(?string $message = null, ?int $code = null)

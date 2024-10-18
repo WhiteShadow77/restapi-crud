@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Services\Task\TaskResourceControllerInterface;
 use Illuminate\Http\Request;
 use App\Services\Task\TaskService;
@@ -34,9 +35,9 @@ class TaskController extends Controller implements TaskResourceControllerInterfa
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        return  $this->taskService->index;
+        return $this->taskService->store($request);
     }
 
     /**
