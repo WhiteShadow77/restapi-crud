@@ -102,13 +102,5 @@ class CategoryService implements CategoryResourceControllerInterface
                 return $this->responseService->errorResponse('Forbidden', 403);
             }
         }
-
-//        $category = Category::where('id', $id)->delete();
-//        if($category) {
-//            return $this->responseService->successResponse('Category deleted');
-//        } else {
-//            return $this->responseService->errorResponse('Category not found', 404);
-//        }
     }
-
 }
