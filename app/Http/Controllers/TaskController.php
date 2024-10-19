@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Services\Task\TaskResourceControllerInterface;
 use Illuminate\Http\Request;
 use App\Services\Task\TaskService;
@@ -29,7 +30,7 @@ class TaskController extends Controller implements TaskResourceControllerInterfa
      */
     public function create()
     {
-        return  $this->taskService->index;
+        return $this->taskService->create();
     }
 
     /**
@@ -45,7 +46,7 @@ class TaskController extends Controller implements TaskResourceControllerInterfa
      */
     public function show(string $id)
     {
-        return  $this->taskService->index;
+        return $this->taskService->show($id);
     }
 
     /**
@@ -53,15 +54,15 @@ class TaskController extends Controller implements TaskResourceControllerInterfa
      */
     public function edit(string $id)
     {
-        return  $this->taskService->index;
+        return $this->taskService->edit($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTaskRequest $request, string $id)
     {
-        return  $this->taskService->index;
+        return $this->taskService->update($request, $id);
     }
 
     /**
@@ -69,6 +70,6 @@ class TaskController extends Controller implements TaskResourceControllerInterfa
      */
     public function destroy(string $id)
     {
-        return  $this->taskService->index;
+        return $this->taskService->destroy($id);
     }
 }

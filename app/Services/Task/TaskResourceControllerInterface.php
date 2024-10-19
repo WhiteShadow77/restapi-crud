@@ -4,6 +4,7 @@
 namespace App\Services\Task;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
 
 
@@ -19,7 +20,7 @@ interface TaskResourceControllerInterface
 
     public function edit(string $id);
 
-    public function update(Request $request, string $id);
+    public function update(UpdateTaskRequest $request, string $id);
 
     public function destroy(string $id);
 }
