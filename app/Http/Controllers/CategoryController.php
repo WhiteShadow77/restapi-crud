@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
 use App\Services\Category\CategoryResourceControllerInterface;
 use App\Services\Category\CategoryService;
 use Illuminate\Http\Request;
@@ -14,6 +15,8 @@ class CategoryController extends Controller implements CategoryResourceControlle
 
     public function __construct(CategoryService $categoryService)
     {
+
+        //$this->authorizeResource(Category::class, 'category');
         $this->categoryService = $categoryService;
     }
 

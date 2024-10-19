@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\ResponseService;
 use App\Http\Resources\CategoryResource;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryService implements CategoryResourceControllerInterface
 {
@@ -63,12 +64,22 @@ class CategoryService implements CategoryResourceControllerInterface
 
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        $category = Category::where('id', $id)->update($request->all());
+        $category = Category::find($id);
 
-        if(!$category){
+        if (!$category) {
+
             return $this->responseService->errorResponse('Category not found', 404);
+
         } else {
-            return $this->responseService->successResponse('Category updated', 200);
+            if(Gate::allows('update', $category)) {
+
+                $category->update($request->all());
+                return $this->responseService->successResponse('Category updated', 200);
+
+            } else {
+
+                return $this->responseService->errorResponse('Forbidden', 403);
+            }
         }
     }
 
