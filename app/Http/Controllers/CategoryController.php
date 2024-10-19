@@ -30,7 +30,7 @@ class CategoryController extends Controller implements CategoryResourceControlle
      */
     public function create()
     {
-        //
+        return $this->categoryService->create();
     }
 
     /**
@@ -38,7 +38,7 @@ class CategoryController extends Controller implements CategoryResourceControlle
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        return $this->categoryService->store($request);
     }
 
     /**
@@ -46,7 +46,7 @@ class CategoryController extends Controller implements CategoryResourceControlle
      */
     public function show(string $id)
     {
-        //
+        return $this->categoryService->show($id);
     }
 
     /**
@@ -54,7 +54,7 @@ class CategoryController extends Controller implements CategoryResourceControlle
      */
     public function edit(string $id)
     {
-        //
+        return $this->categoryService->edit($id);
     }
 
     /**
@@ -62,7 +62,7 @@ class CategoryController extends Controller implements CategoryResourceControlle
      */
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        return $this->categoryService->update($request, $id);
     }
 
     /**
@@ -70,6 +70,6 @@ class CategoryController extends Controller implements CategoryResourceControlle
      */
     public function destroy(string $id)
     {
-        //
+        return $this->categoryService->destroy($id);
     }
 }

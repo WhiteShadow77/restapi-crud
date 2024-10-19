@@ -57,7 +57,6 @@ class TaskService implements TaskResourceControllerInterface
         } else {
             return $this->responseService->errorResponse('Task not found', 404);
         }
-
     }
 
     public function edit(string $id)

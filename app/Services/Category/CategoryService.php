@@ -29,32 +29,57 @@ class CategoryService implements CategoryResourceControllerInterface
 
     public function create()
     {
-        //
+        return $this->responseService->errorResponse('Method not allowed', 405);
     }
 
     public function store(StoreCategoryRequest $request)
     {
-        //
+        Category::create([
+            'name' => $request->name,
+            'type' => $request->type,
+        ]);
+        return $this->responseService->successResponse('Category created', 201);
     }
 
     public function show(string $id)
     {
-        //
+        $category = Category::where('id', $id)->get();
+
+        if(sizeof($category) > 0) {
+            return $this->responseService->successResponseWithResourceCollection(
+                'Category by id',
+                CategoryResource::class,
+                $category
+            );
+        } else {
+            return $this->responseService->errorResponse('Category not found', 404);
+        }
     }
 
     public function edit(string $id)
     {
-        //
+        return $this->responseService->errorResponse('Method not allowed', 405);
     }
 
     public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $category = Category::where('id', $id)->update($request->all());
+
+        if(!$category){
+            return $this->responseService->errorResponse('Category not found', 404);
+        } else {
+            return $this->responseService->successResponse('Category updated', 200);
+        }
     }
 
     public function destroy(string $id)
     {
-        //
+        $category = Category::where('id', $id)->delete();
+        if($category) {
+            return $this->responseService->successResponse('Category deleted');
+        } else {
+            return $this->responseService->errorResponse('Category not found', 404);
+        }
     }
 
 }
