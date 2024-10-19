@@ -15,8 +15,6 @@ class CategoryController extends Controller implements CategoryResourceControlle
 
     public function __construct(CategoryService $categoryService)
     {
-
-        //$this->authorizeResource(Category::class, 'category');
         $this->categoryService = $categoryService;
     }
 

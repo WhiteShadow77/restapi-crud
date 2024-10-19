@@ -21,8 +21,6 @@ class JwtMiddleware
 
         try {
 
-            //JWTAuth::parseToken()->getPayload();
-
             $this->auth = JWTAuth::parseToken()->authenticate();
 
             if (!$this->auth) {
@@ -37,19 +35,4 @@ class JwtMiddleware
 
         return $next($request);
     }
-
-
-//{
-//    public function handle($request, Closure $next, $ability, ...$models)
-//    {
-//        try {
-//            $this->auth->authenticate();
-//
-//            $this->gate->authorize($ability, $this->getGateArguments($request, $models));
-//        } catch (AuthorizationException $e) {
-//            return response()->json(['error' => 'Not authorized.'],403);
-//        }
-//
-//        return $next($request);
-//    }
 }
