@@ -20,9 +20,9 @@ class TaskController extends Controller //implements TaskResourceControllerInter
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->taskService->index();
+        return $this->taskService->index($request);
     }
 
     /**

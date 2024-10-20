@@ -12,6 +12,7 @@ use App\Models\Task;
 use App\Services\ResponseService;
 use Illuminate\Http\Request;
 use App\Enums\CategoryStatusType;
+use Illuminate\Support\Facades\DB;
 
 class TaskService //implements TaskResourceControllerInterface
 {
@@ -22,13 +23,43 @@ private ResponseService $responseService;
         $this->responseService = $responseService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->responseService->successResponseWithResourceCollection(
-            'All tasks',
-            TaskResource::class,
-            Task::all()
-        );
+        if($request->has('category_sort')){
+
+            //dd($request->get('category_sort'));
+
+            $result = DB::table('tasks')
+                ->join('categories', 'categories.id', '=', 'tasks.category_id')
+                ->select([
+                    'tasks.id',
+                    'tasks.name',
+                    'tasks.description',
+                    'tasks.done_at',
+                    'tasks.created_at',
+                    'tasks.updated_at',
+                    'categories.type as category_type',
+                    'categories.name as category_name',
+                ])
+                ->orderByRaw(
+                    'category_' . key($request->get('category_sort')) . ' ' . current($request->get('category_sort'))
+                )
+                ->get();
+
+            //dd($result);
+
+            return $this->responseService->successResponseWithResourceCollection(
+                'All tasks sorted by category ' . current($request->get('category_sort')),
+                TaskResource::class,
+                $result
+            );
+        } else {
+            return $this->responseService->successResponseWithResourceCollection(
+                'All tasks',
+                TaskResource::class,
+                Task::all()
+            );
+        }
     }
 
     public function create()
