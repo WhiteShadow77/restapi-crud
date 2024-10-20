@@ -18,4 +18,9 @@ class UserController extends Controller
     {
         return $this->userService->getUsersWithTasks();
     }
+
+    public function getUsers(Request $request)
+    {
+        return $this->userService->getUsers($request);
+    }
 }

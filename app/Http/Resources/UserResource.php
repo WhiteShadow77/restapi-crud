@@ -14,9 +14,21 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'email' => $this->user_email,
-            'tasks quantity' => $this->tasks_quantity
-        ];
+        if(isset($this->email)){
+            $result = ['email' => $this->email];
+        }
+
+        if(!isset($this->task_quantity)) {
+            $result['tasks quantity'] = count($this->tasks);
+        } else {
+            if(isset($this->category_name)) {
+                $result['name'] = $this->category_name;
+            }
+            if(isset($this->user_email)) {
+                $result['email'] = $this->user_email;
+            }
+            $result['tasks quantity'] = $this->task_quantity;
+        }
+        return $result;
     }
 }

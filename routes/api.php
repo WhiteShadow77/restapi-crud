@@ -18,19 +18,24 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+Route::group(['prefix' => 'auth'], function () {
 
     Route::post('login', [AuthController::class, 'login']);
+});
+
+Route::group(['middleware' => 'jwt', 'prefix' => 'auth'], function () {
+
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 
 });
 
-Route::group(['middleware' => 'api'], function ($router) {
+Route::group(['middleware' => 'jwt'], function () {
 
     Route::resource('tasks', TaskController::class);
     Route::resource('categories', CategoryController::class);
 
-    Route::get('users/tasks', [UserController::class, 'getUsersWithTasks']);
+    Route::get('users', [UserController::class, 'getUsers'])->middleware('admin');
+    Route::get('users/tasks', [UserController::class, 'getUsersWithTasks'])->middleware('admin');
 
 });

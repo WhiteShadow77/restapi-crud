@@ -7,15 +7,18 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserResourceCollection extends ResourceCollection
 {
-    private bool $isSuccessfullResponse;
-    private string $message;
+private bool $isSuccessfullResponse;
+private string $message;
+private ?array $keyValueToData;
 
-    public function __construct(bool $isSuccessfullResponse, string $message, $resource)
+    public function __construct(bool $isSuccessfullResponse, string $message, $resource, ?array $keyValueToData = null)
     {
         $this->isSuccessfullResponse = $isSuccessfullResponse;
         $this->message = $message;
+        $this->keyValueToData = $keyValueToData;
         parent::__construct($resource);
     }
+
     /**
      * Transform the resource collection into an array.
      *
@@ -23,11 +26,18 @@ class UserResourceCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return [
+        $result = [
             'status' => $this->isSuccessfullResponse ? 'success' : 'error',
             'message' => $this->message,
-            'data' => $this->collection,
-
         ];
+
+        if (is_null($this->keyValueToData)) {
+            $result['data'] = $this->collection;
+        } else {
+            $result['data'][key($this->keyValueToData)] = current($this->keyValueToData);
+            $result['data']['categories'] = $this->collection;
+        }
+
+        return $result;
     }
 }

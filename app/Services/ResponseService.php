@@ -61,12 +61,12 @@ private array  $responseData;
     }
 
     public function successResponseWithResourceCollection(
-        string $message, string $resourceClassName, $collectionToResponse
+        string $message, string $resourceClassName, $collectionToResponse, ?array $keyValueToData = null
     )
     {
         $resourceInstance = new $resourceClassName($collectionToResponse);
         $resourceCollectionClassName = $resourceClassName . 'Collection';
-        return new $resourceCollectionClassName(true, $message, $resourceInstance);
+        return new $resourceCollectionClassName(true, $message, $resourceInstance, $keyValueToData);
     }
 
     public function errorResponseWithExceptionAndKeyValueData(string|array $error, array $keyValueData,  int $code = 400)
