@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TaskCategoryController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +30,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::resource('tasks', TaskController::class);
     Route::resource('categories', CategoryController::class);
+
+    Route::get('users/tasks', [UserController::class, 'getUsersWithTasks']);
 
 });

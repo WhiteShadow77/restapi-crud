@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class TaskService //implements TaskResourceControllerInterface
 {
-private ResponseService $responseService;
+    private ResponseService $responseService;
 
     public function __construct(ResponseService $responseService)
     {
@@ -26,8 +26,6 @@ private ResponseService $responseService;
     public function index(Request $request)
     {
         if($request->has('category_sort')){
-
-            //dd($request->get('category_sort'));
 
             $result = DB::table('tasks')
                 ->join('categories', 'categories.id', '=', 'tasks.category_id')
@@ -43,10 +41,7 @@ private ResponseService $responseService;
                 ])
                 ->orderByRaw(
                     'category_' . key($request->get('category_sort')) . ' ' . current($request->get('category_sort'))
-                )
-                ->get();
-
-            //dd($result);
+                )->get();
 
             return $this->responseService->successResponseWithResourceCollection(
                 'All tasks sorted by category ' . current($request->get('category_sort')),
