@@ -7,14 +7,15 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskResourceCollection;
+use App\Models\Category;
 use App\Models\Task;
 use App\Services\ResponseService;
 use Illuminate\Http\Request;
 use App\Enums\CategoryStatusType;
 
-class TaskService implements TaskResourceControllerInterface
+class TaskService //implements TaskResourceControllerInterface
 {
-    private ResponseService $responseService;
+private ResponseService $responseService;
 
     public function __construct(ResponseService $responseService)
     {
@@ -48,7 +49,7 @@ class TaskService implements TaskResourceControllerInterface
     {
         $task = Task::where('id', $id)->get();
 
-        if(sizeof($task) > 0) {
+        if (sizeof($task) > 0) {
             return $this->responseService->successResponseWithResourceCollection(
                 'Task by id',
                 TaskResource::class,
@@ -66,44 +67,47 @@ class TaskService implements TaskResourceControllerInterface
 
     public function update(UpdateTaskRequest $request, string $id)
     {
-        $categoryFromRequest = $request?->get('category');
-        $statusFromRequest = $request?->get('status');
+        $updateConfig = $request->all();
+        $categoryFromRequest = $request ?->get('category');
+        $statusFromRequest = $request ?->get('status');
 
-        if(!is_null($categoryFromRequest)){
-            $category = [$categoryFromRequest];
-        } else {
-            $category = [];
+        if (!is_null($categoryFromRequest)) {
+            unset($updateConfig['category']);
         }
 
-        if(!is_null($statusFromRequest)){
-            $status = [$statusFromRequest];
-        } else {
-            $status = [];
+        if (!is_null($statusFromRequest)) {
+            unset($updateConfig['status']);
         }
 
-        $updateConfig = array_diff(
-            $request->all(),
-             $category,
-             $status
-        );
+        if (!is_null($categoryFromRequest)) {
 
-        if(!is_null($categoryFromRequest)){
+            if(sizeof($categoryFromRequest) > 0) {
 
-        }
+                $category = Category::where(key($categoryFromRequest), current($categoryFromRequest))->first();
 
-        if(!is_null($statusFromRequest)){
-
-            if($statusFromRequest == (CategoryStatusType::IN_PROGRESS)->name){
-
+                if ($category) {
+                    $updateConfig['category_id'] = $category->id;
+                } else {
+                    return $this->responseService->errorResponse('Category not found', 404);
+                }
+            } else {
+                $updateConfig['category_id'] = null;
             }
-            if($statusFromRequest == (CategoryStatusType::DONE)->name){
+        }
+
+        if (!is_null($statusFromRequest)) {
+
+            if ($statusFromRequest == (CategoryStatusType::IN_PROGRESS)->name) {
+                $updateConfig['done_at'] = null;
+            }
+            if ($statusFromRequest == (CategoryStatusType::DONE)->name) {
                 $updateConfig['done_at'] = now()->format('Y-m-d H:i:s');
             }
         }
 
-        $task = Task::where('id', $id)->update($updateConfig);
+       $task = Task::where('id', $id)->update($updateConfig);
 
-        if(!$task){
+        if (!$task) {
             return $this->responseService->errorResponse('Task not found', 404);
         } else {
             return $this->responseService->successResponse('Task updated', 200);
@@ -113,8 +117,21 @@ class TaskService implements TaskResourceControllerInterface
     public function destroy(string $id)
     {
         $task = Task::where('id', $id)->delete();
-        if($task) {
+        if ($task) {
             return $this->responseService->successResponse('Task deleted');
+        } else {
+            return $this->responseService->errorResponse('Task not found', 404);
+        }
+    }
+
+    public function attacheCategory(string $id, string $categoryId)
+    {
+        $task = Task::where('id', $id)->update([
+            'category_id' => $categoryId
+        ]);
+
+        if ($task) {
+            return $this->responseService->successResponse('Category attached', 200);
         } else {
             return $this->responseService->errorResponse('Task not found', 404);
         }

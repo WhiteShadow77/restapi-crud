@@ -8,7 +8,7 @@ use App\Services\Task\TaskResourceControllerInterface;
 use Illuminate\Http\Request;
 use App\Services\Task\TaskService;
 
-class TaskController extends Controller implements TaskResourceControllerInterface
+class TaskController extends Controller //implements TaskResourceControllerInterface
 {
     private TaskService $taskService;
 
@@ -71,5 +71,10 @@ class TaskController extends Controller implements TaskResourceControllerInterfa
     public function destroy(string $id)
     {
         return $this->taskService->destroy($id);
+    }
+
+    public function attacheCategory(string $id, string $categoryId)
+    {
+        return $this->taskService->attacheCategory($id, $categoryId);
     }
 }
