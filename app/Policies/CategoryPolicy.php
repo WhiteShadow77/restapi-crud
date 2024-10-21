@@ -38,7 +38,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        if($category->type == "Срочные задачи"){
+        if($category->type == "Срочные задачи" || $category->name == "Срочные задачи"){
             return false;
         } else {
             return true;
@@ -50,7 +50,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        if($category->type == "Срочные задачи"){
+        if($category->type == "Срочные задачи" || $category->name == "Срочные задачи"){
             return false;
         } else {
             return true;
@@ -62,7 +62,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category): bool
     {
-        if($category->type == "Срочные задачи"){
+        if($category->type == "Срочные задачи" || $category->name == "Срочные задачи"){
             return false;
         } else {
             return true;
@@ -74,7 +74,7 @@ class CategoryPolicy
      */
     public function forceDelete(User $user, Category $category): bool
     {
-        if($category->type == "Срочные задачи"){
+        if($category->type == "Срочные задачи" || $category->name == "Срочные задачи"){
             return false;
         } else {
             return true;
