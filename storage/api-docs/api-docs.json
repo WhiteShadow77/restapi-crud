@@ -992,22 +992,22 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryErrorValidation"
-                }
-              }
-            }
-          },
           "401": {
             "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponse"
                 }
               }
             }
@@ -1112,10 +1112,10 @@
       },
       "CategoryDeleteSuccessResponse": {
         "properties": {
-          "Success": {
+          "status": {
             "description": "Status of the request",
-            "type": "boolean",
-            "example": "true"
+            "type": "string",
+            "example": "success"
           },
           "message": {
             "description": "Success message",
@@ -1177,13 +1177,13 @@
       },
       "CategoryDeleteErrorResponse": {
         "properties": {
-          "Success": {
-            "type": "boolean",
-            "example": "false"
+          "status": {
+            "type": "string",
+            "example": "success"
           },
           "message": {
             "type": "string",
-            "example": "Category not found and not deleted"
+            "example": "Category not found"
           }
         }
       },
