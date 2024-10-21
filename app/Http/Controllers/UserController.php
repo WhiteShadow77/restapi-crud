@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteUserByEmailRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -22,5 +23,10 @@ class UserController extends Controller
     public function getUsers(Request $request)
     {
         return $this->userService->getUsers($request);
+    }
+
+    public function deleteUserByEmail(DeleteUserByEmailRequest $request)
+    {
+        return $this->userService->deleteUserByEmail($request);
     }
 }

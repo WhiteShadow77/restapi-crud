@@ -36,8 +36,6 @@ private ResponseService $responseService;
     {
         if ($request->has('email')) {
 
-            //DB::connection()->enableQueryLog();
-
             $users = DB::table('users')
                 ->join('tasks', 'users.id', '=', 'tasks.user_id')
                 ->join('categories', 'tasks.category_id', '=', 'categories.id')
@@ -48,27 +46,11 @@ private ResponseService $responseService;
                 ->groupBy(['categories.name','users.email'])
                 ->get();
 
-
-            //$users = User::where('email', $request->email)->with('tasks')->get();
-
-            //dd($email);
-
-            //dd(DB::getQueryLog());
-            ///"query" => "select * from `users` where `email` = ?"
-            /// "query" => "select * from `tasks` where `tasks`.`user_id` in (1)"
-
             if (sizeof($users) == 0) {
 
                 return $this->responseService->errorResponse('User not found', 404);
 
             } else {
-
-//                dd( $users[0]);
-//                $email = $users[0]->user_email;
-//
-//                foreach ($users as $user){
-//                    unset($user['user_email']);
-//                }
 
                 return $this->responseService->successResponseWithResourceCollection(
                     'User by email',
@@ -83,6 +65,17 @@ private ResponseService $responseService;
                 UserResource::class,
                 User::all()
             );
+        }
+    }
+
+    public function deleteUserByEmail($request)
+    {
+        $user = User::where('email', $request->email)->delete();
+
+        if ($user) {
+            return $this->responseService->successResponse('User deleted');
+        } else {
+            return $this->responseService->errorResponse('User not found', 404);
         }
     }
 }

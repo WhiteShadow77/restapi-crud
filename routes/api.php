@@ -37,5 +37,6 @@ Route::group(['middleware' => 'jwt'], function () {
 
     Route::get('users', [UserController::class, 'getUsers'])->middleware('admin');
     Route::get('users/tasks', [UserController::class, 'getUsersWithTasks'])->middleware('admin');
+    Route::delete('users/{email}', [UserController::class, 'deleteUserByEmail'])->middleware('admin');
 
 });
