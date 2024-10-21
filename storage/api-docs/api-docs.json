@@ -16,6 +16,10 @@
     {
       "name": "Category",
       "description": "Category description"
+    },
+    {
+      "name": "User",
+      "description": "User description"
     }
   ],
   "paths": {
@@ -59,7 +63,7 @@
                     },
                     "access_token": {
                       "type": "string",
-                      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9zaWduaW4iLCJpYXQiOjE3MTkzMjQzMzMsImV4cCI6MTcxOTMyNzkzMywibmJmIjoxNzE5MzI0MzMzLCJqdGkiOiJzTjIwWnNLaEthbUIwSFJVIiwic3ViIjoiMSIsInBydiI6ImQzOTBhYTdkZTg1NjA0ZGM1NWI0ZDdhOWI2MjNmNzVkYThjZmQ5MzIifQ.EW6ayY7FejKpM-KOvSLXSTKIGVphWsWCsMWF0U7NkvE",
+                      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9zaWduaW4iLCJpYXQiOjE3MTkzMjQzMzMsImV4cCI6MTcxOTMyNzkzMywibmJmIjoxNzE5MzI0MzMzLCJqdGkiOiJzTjIwWnNLaEthbUIwSFJVIiwic3ViIjoiMSIsInBydiI6ImQzOTBhYTdkZTg1NjA0ZGM1NWI0ZDdhOWI2MjNmNzVkYThjZmQ5MzIifQ.EW6ayY7FejKpM-KOvSLXSTKIGVphWsWCsMWF0U7NkvE"
                     },
                     "token_type": {
                       "type": "string",
@@ -215,7 +219,7 @@
                     },
                     "access_token": {
                       "type": "string",
-                      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9zaWduaW4iLCJpYXQiOjE3MTkzMjQzMzMsImV4cCI6MTcxOTMyNzkzMywibmJmIjoxNzE5MzI0MzMzLCJqdGkiOiJzTjIwWnNLaEthbUIwSFJVIiwic3ViIjoiMSIsInBydiI6ImQzOTBhYTdkZTg1NjA0ZGM1NWI0ZDdhOWI2MjNmNzVkYThjZmQ5MzIifQ.EW6ayY7FejKpM-KOvSLXSTKIGVphWsWCsMWF0U7NkvE",
+                      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9zaWduaW4iLCJpYXQiOjE3MTkzMjQzMzMsImV4cCI6MTcxOTMyNzkzMywibmJmIjoxNzE5MzI0MzMzLCJqdGkiOiJzTjIwWnNLaEthbUIwSFJVIiwic3ViIjoiMSIsInBydiI6ImQzOTBhYTdkZTg1NjA0ZGM1NWI0ZDdhOWI2MjNmNzVkYThjZmQ5MzIifQ.EW6ayY7FejKpM-KOvSLXSTKIGVphWsWCsMWF0U7NkvE"
                     },
                     "token_type": {
                       "type": "string",
@@ -776,9 +780,6 @@
         }
       }
     },
-//    "/api/categories": {
-//
-//    },
     "/api/categories/{category_id_to_show}": {
       "get": {
         "tags": [
@@ -1034,10 +1035,93 @@
           }
         }
       }
+    },
+
+    "/api/users?email=alex@gmail.com": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by email.",
+        "description": "Gets user by email.",
+        "operationId": "515c07631f88ee1a20c5c6cd373d920f",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User by email"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserByEmail"
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "UserByEmail":{
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "alex@gmail.com"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryItemForUserByEmail"
+            }
+          }
+        }
+      },
       "TaskItem": {
         "properties": {
           "id": {
@@ -1163,6 +1247,18 @@
           }
         }
       },
+      "UserNotFound": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "example": "User not found"
+          }
+        }
+      },
       "CategoryNotFound": {
         "properties": {
           "status": {
@@ -1222,6 +1318,19 @@
             "example": "Unauthorized"
           }
         }
+      },
+      "CategoryItemForUserByEmail": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name_one"
+          },
+          "type": {
+            "type": "string",
+            "example": "type_one"
+          }
+        },
+        "type": "object"
       },
       "CategoryItem": {
         "properties": {
