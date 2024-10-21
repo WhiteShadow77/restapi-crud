@@ -1037,6 +1037,64 @@
       }
     },
 
+    "/api/users/tasks": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get users with tasks.",
+        "description": "Gets user with tasks.",
+        "operationId": "515c07631f88ee1a20c5c6cd373d920f",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Users with tasks"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UsersWithTasksItem"
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/users?email=alex@gmail.com": {
       "get": {
         "tags": [
@@ -1331,6 +1389,18 @@
           }
         },
         "type": "object"
+      },
+      "UsersWithTasksItem" : {
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "alex@gmail.com"
+          },
+          "tasks quantity": {
+            "type": "integer",
+            "example": "1"
+          }
+        }
       },
       "CategoryItem": {
         "properties": {
