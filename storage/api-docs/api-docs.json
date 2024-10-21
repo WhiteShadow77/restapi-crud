@@ -1044,7 +1044,7 @@
         ],
         "summary": "Get users with tasks.",
         "description": "Gets user with tasks.",
-        "operationId": "515c07631f88ee1a20c5c6cd373d920f",
+        "operationId": "515c07631f88ee1a20c5c6cd383d920f",
         "responses": {
           "200": {
             "description": "OK",
@@ -1383,9 +1383,9 @@
             "type": "string",
             "example": "name_one"
           },
-          "type": {
-            "type": "string",
-            "example": "type_one"
+          "tasks quantity": {
+            "type": "integer",
+            "example": "1"
           }
         },
         "type": "object"
