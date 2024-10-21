@@ -1211,17 +1211,9 @@
             "type": "string",
             "example": "name_one"
           },
-          "description": {
+          "type": {
             "type": "string",
-            "example": "description_one"
-          },
-          "created_at": {
-            "type": "string",
-            "example": "2024-06-25 07:36:56"
-          },
-          "updated_at": {
-            "type": "string",
-            "example": "2024-06-25 08:48:22"
+            "example": "type_one"
           }
         },
         "type": "object"
