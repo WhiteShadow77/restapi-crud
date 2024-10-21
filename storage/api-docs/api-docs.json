@@ -576,7 +576,7 @@
           {
             "name": "task_id_to_delete",
             "in": "path",
-            "description": "Update task",
+            "description": "Delete task",
             "required": true,
             "schema": {
               "type": "integer"
@@ -591,8 +591,8 @@
                 "schema": {
                   "properties": {
                     "status": {
-                      "type": "boolean",
-                      "example": "true"
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
@@ -622,11 +622,11 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "success"
+                      "example": "error"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Task not found and not deleted"
+                      "example": "Task not found"
                     }
                   },
                   "type": "object"
