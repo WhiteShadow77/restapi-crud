@@ -791,7 +791,7 @@
           {
             "name": "category_id_to_show",
             "in": "path",
-            "description": "Update task",
+            "description": "Category id to show",
             "required": true,
             "schema": {
               "type": "integer"
@@ -806,12 +806,12 @@
                 "schema": {
                   "properties": {
                     "status": {
-                      "type": "boolean",
-                      "example": "true"
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
-                      "example": "Category"
+                      "example": "Category by id"
                     },
                     "data": {
                       "type": "array",
@@ -835,6 +835,16 @@
               }
             }
           },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryNotFound"
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -849,7 +859,7 @@
       }
     },
     "/api/categories/{category_id_to_update}": {
-      "put": {
+      "patch": {
         "tags": [
           "Category"
         ],
@@ -915,6 +925,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponse"
                 }
               }
             }
@@ -1077,10 +1097,10 @@
       },
       "CategoryUpdateSuccessResponse": {
         "properties": {
-          "Success": {
+          "status": {
             "description": "Status of the request",
-            "type": "boolean",
-            "example": "true"
+            "type": "string",
+            "example": "success"
           },
           "message": {
             "description": "Success message",
@@ -1164,6 +1184,18 @@
           "message": {
             "type": "string",
             "example": "Category not found and not deleted"
+          }
+        }
+      },
+      "ForbiddenResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "example": "Forbidden"
           }
         }
       },
