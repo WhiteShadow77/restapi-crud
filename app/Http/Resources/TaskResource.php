@@ -38,8 +38,8 @@ class TaskResource extends JsonResource
             'description' => $this->description,
             'status' => is_null($this->done_at) ? 'IN_PROGRESS' : 'DONE',
             'category' => $category,
-            'created at' => $this->created_at,
-            'updated at' => $this->updated_at
+            'created at' => date('Y-m-d H:i:s', strtotime($this->created_at)),
+            'updated at' => date('Y-m-d H:i:s', strtotime($this->updated_at))
         ];
     }
 }
