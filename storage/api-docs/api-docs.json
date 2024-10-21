@@ -19,79 +19,6 @@
     }
   ],
   "paths": {
-    "/api/signup":{
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Sign up user.",
-        "description": "Sign up new user.",
-        "operationId": "515c07631f88ee1a20c5c6cd303b320f",
-        "requestBody": {
-          "description": "Input data format",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SignUpRequest"
-              }
-            }
-          }
-        },
-        "security": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "status": {
-                      "type": "boolean",
-                      "example": "true"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User has signed up"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "The email has already been taken."
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalServerError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/auth/login":{
       "post": {
         "tags": [
@@ -181,6 +108,142 @@
                     "message": {
                       "type": "string",
                       "example": "Unauthorized."
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout":{
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout.",
+        "description": "Log out of the user.",
+        "operationId": "515c07631f88ee1a20c5c6cd303b320f",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged out"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh":{
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh.",
+        "description": "Refresh the token of the user.",
+        "operationId": "515c07631f88ee1a20c5c6cd303b320d",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9zaWduaW4iLCJpYXQiOjE3MTkzMjQzMzMsImV4cCI6MTcxOTMyNzkzMywibmJmIjoxNzE5MzI0MzMzLCJqdGkiOiJzTjIwWnNLaEthbUIwSFJVIiwic3ViIjoiMSIsInBydiI6ImQzOTBhYTdkZTg1NjA0ZGM1NWI0ZDdhOWI2MjNmNzVkYThjZmQ5MzIifQ.EW6ayY7FejKpM-KOvSLXSTKIGVphWsWCsMWF0U7NkvE",
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example":  "bearer"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example":  3600
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
                     }
                   },
                   "type": "object"
@@ -1156,7 +1219,7 @@
           },
           "message": {
             "type": "string",
-            "example": "Some thing went wrong"
+            "example": "Something went wrong"
           }
         }
       },
@@ -1197,7 +1260,7 @@
         },
         "type": "object"
       },
-      "SignUpRequest":{
+      "LogoutRequest":{
         "properties": {
           "email": {
             "type": "string",
