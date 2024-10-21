@@ -10,8 +10,8 @@
       "description": "Auth description"
     },
     {
-      "name": "Product",
-      "description": "Product description"
+      "name": "Task",
+      "description": "Task description"
     },
     {
       "name": "Category",
@@ -264,13 +264,13 @@
         }
       }
     },
-    "/api/products": {
+    "/api/tasks": {
       "get": {
         "tags": [
-          "Product"
+          "Task"
         ],
-        "summary": "Get all products.",
-        "description": "Gets all products.",
+        "summary": "Get all tasks.",
+        "description": "Gets all tasks.",
         "operationId": "515c07631f88ee1a20c5c6cd303b920f",
         "responses": {
           "200": {
@@ -280,17 +280,17 @@
                 "schema": {
                   "properties": {
                     "status": {
-                      "type": "boolean",
-                      "example": "true"
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
-                      "example": "All products"
+                      "example": "All tasks"
                     },
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ProductItem"
+                        "$ref": "#/components/schemas/TaskItem"
                       }
                     }
                   },
@@ -322,13 +322,13 @@
         }
       }
     },
-    "/api/products/create": {
+    "/api/tasks/create": {
       "post": {
         "tags": [
-          "Product"
+          "Task"
         ],
-        "summary": "Create product.",
-        "description": "Creates new product.",
+        "summary": "Create task.",
+        "description": "Creates new task.",
         "operationId": "515c07631f88ee1a20c2c6cd303b920f",
         "requestBody": {
           "description": "Input data format",
@@ -377,7 +377,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Product created"
+                      "example": "Task created"
                     }
                   },
                   "type": "object"
@@ -390,7 +390,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductErrorValidation"
+                  "$ref": "#/components/schemas/TaskErrorValidation"
                 }
               }
             }
@@ -418,19 +418,19 @@
         }
       }
     },
-    "/api/products/{product_id_to_show}": {
+    "/api/tasks/{task_id_to_show}": {
       "get": {
         "tags": [
-          "Product"
+          "Task"
         ],
-        "summary": "Show product.",
-        "description": "Shows product by product_id_to_show identifier.",
+        "summary": "Show task.",
+        "description": "Shows task by task_id_to_show identifier.",
         "operationId": "515c07631f88ee1a20c5c6cd303b520f",
         "parameters": [
           {
-            "name": "product_id_to_show",
+            "name": "task_id_to_show",
             "in": "path",
-            "description": "Update product",
+            "description": "Update task",
             "required": true,
             "schema": {
               "type": "integer"
@@ -450,12 +450,12 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Product"
+                      "example": "Task"
                     },
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ProductItem"
+                        "$ref": "#/components/schemas/TaskItem"
                       }
                     }
                   },
@@ -487,19 +487,19 @@
         }
       }
     },
-    "/api/products/{product_id_to_update}": {
+    "/api/tasks/{task_id_to_update}": {
       "post": {
         "tags": [
-          "Product"
+          "Task"
         ],
-        "summary": "Update the product.",
-        "description": "Update the product.",
+        "summary": "Update task.",
+        "description": "Update task.",
         "operationId": "cc769092791dc87ca7c700a3c74c3cb1",
         "parameters": [
           {
-            "name": "product_id_to_update",
+            "name": "task_id_to_update",
             "in": "path",
-            "description": "Update product",
+            "description": "Update task",
             "required": true,
             "schema": {
               "type": "integer"
@@ -546,7 +546,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductUpdateSuccessResponse"
+                  "$ref": "#/components/schemas/TaskUpdateSuccessResponse"
                 }
               }
             }
@@ -556,7 +556,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductErrorValidation"
+                  "$ref": "#/components/schemas/TaskErrorValidation"
                 }
               }
             }
@@ -576,7 +576,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductNotFound"
+                  "$ref": "#/components/schemas/TaskNotFound"
                 }
               }
             }
@@ -594,19 +594,19 @@
         }
       }
     },
-    "/api/products/{product_id_to_delete}": {
+    "/api/tasks/{task_id_to_delete}": {
       "delete": {
         "tags": [
-          "Product"
+          "Task"
         ],
-        "summary": "Delete product.",
-        "description": "Deletes product by product_id_to_delete identifier",
+        "summary": "Delete task.",
+        "description": "Deletes task by task_id_to_delete identifier",
         "operationId": "515c07631f88ee1a20c5c6cd303b926f",
         "parameters": [
           {
-            "name": "product_id_to_delete",
+            "name": "task_id_to_delete",
             "in": "path",
-            "description": "Update product",
+            "description": "Update task",
             "required": true,
             "schema": {
               "type": "integer"
@@ -626,7 +626,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Product deleted"
+                      "example": "Task deleted"
                     }
                   },
                   "type": "object"
@@ -656,7 +656,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Product not found and not deleted"
+                      "example": "Task not found and not deleted"
                     }
                   },
                   "type": "object"
@@ -748,7 +748,7 @@
           {
             "name": "category_id_to_show",
             "in": "path",
-            "description": "Update product",
+            "description": "Update task",
             "required": true,
             "schema": {
               "type": "integer"
@@ -1058,7 +1058,7 @@
   },
   "components": {
     "schemas": {
-      "ProductItem": {
+      "TaskItem": {
         "properties": {
           "id": {
             "type": "integer",
@@ -1072,23 +1072,19 @@
             "type": "string",
             "example": "description_one"
           },
-          "price": {
+          "status": {
             "type": "string",
-            "example": "3.55"
-          },
-          "main_image": {
-            "type": "string",
-            "example": "1719305302_image1.png"
+            "example": "IN_PROGRESS"
           },
           "category":{
             "properties": {
-              "id": {
-                "type": "integer",
-                "example": "1"
+              "type": {
+                "type": "string",
+                "example": "Срочные задачи"
               },
               "name": {
                 "type": "string",
-                "example": "category name"
+                "example": "Срочные задачи"
               }
             },
             "type": "object"
@@ -1104,7 +1100,7 @@
         },
         "type": "object"
       },
-      "ProductUpdateSuccessResponse": {
+      "TaskUpdateSuccessResponse": {
         "properties": {
           "Success": {
             "description": "Status of the request",
@@ -1114,7 +1110,7 @@
           "message": {
             "description": "Success message",
             "type": "string",
-            "example": "Product updated"
+            "example": "Task updated"
           }
         },
         "type": "object"
@@ -1149,7 +1145,7 @@
         },
         "type": "object"
       },
-      "ProductErrorValidation": {
+      "TaskErrorValidation": {
         "properties": {
           "Success": {
             "type": "boolean",
@@ -1175,7 +1171,7 @@
         },
         "type": "object"
       },
-      "ProductNotFound": {
+      "TaskNotFound": {
         "properties": {
           "Success": {
             "type": "boolean",
@@ -1183,7 +1179,7 @@
           },
           "message": {
             "type": "string",
-            "example": "Product not found and not updated"
+            "example": "Task not found and not updated"
           }
         }
       },
@@ -1225,9 +1221,9 @@
       },
       "UnauthorizedError": {
         "properties": {
-          "Success": {
-            "type": "boolean",
-            "example": "false"
+          "status": {
+            "type": "string",
+            "example": "error"
           },
           "message": {
             "type": "string",
