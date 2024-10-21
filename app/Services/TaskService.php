@@ -82,13 +82,9 @@ class TaskService
             }
         }
 
-        $task = Task::create($createConfig);
+        Task::create($createConfig);
 
-        if (!$task) {
-            return $this->responseService->errorResponse('Task not found', 404);
-        } else {
-            return $this->responseService->successResponse('Task created', 200);
-        }
+        return $this->responseService->successResponse('Task created', 200);
     }
 
     public function show(string $id)

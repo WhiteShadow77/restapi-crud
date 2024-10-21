@@ -320,46 +320,20 @@
             }
           }
         }
-      }
-    },
-    "/api/tasks/create": {
+      },
       "post": {
         "tags": [
           "Task"
         ],
         "summary": "Create task.",
         "description": "Creates new task.",
-        "operationId": "515c07631f88ee1a20c2c6cd303b920f",
+        "operationId": "515c07631f88ee1a20c2c6cd303c930f",
         "requestBody": {
           "description": "Input data format",
-          "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "name one"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "description one"
-                  },
-                  "price": {
-                    "type": "string",
-                    "example": "5.55"
-                  },
-                  "category_id": {
-                    "type": "integer",
-                    "example": "4"
-                  },
-                  "main_image": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "The file of main image to be uploaded"
-                  }
-                }
+                "$ref": "#/components/schemas/TaskCreateRequest"
               }
             }
           }
@@ -372,8 +346,8 @@
                 "schema": {
                   "properties": {
                     "status": {
-                      "type": "boolean",
-                      "example": "true"
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
@@ -401,6 +375,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryNotFound"
                 }
               }
             }
@@ -1147,9 +1131,9 @@
       },
       "TaskErrorValidation": {
         "properties": {
-          "Success": {
-            "type": "boolean",
-            "example": "false"
+          "status": {
+            "type": "string",
+            "example": "success"
           },
           "message": {
             "type": "string",
@@ -1173,25 +1157,25 @@
       },
       "TaskNotFound": {
         "properties": {
-          "Success": {
-            "type": "boolean",
-            "example": "false"
+          "status": {
+            "type": "string",
+            "example": "error"
           },
           "message": {
             "type": "string",
-            "example": "Task not found and not updated"
+            "example": "Task not found"
           }
         }
       },
       "CategoryNotFound": {
         "properties": {
-          "Success": {
-            "type": "boolean",
-            "example": "false"
+          "status": {
+            "type": "string",
+            "example": "error"
           },
           "message": {
             "type": "string",
-            "example": "Category not found and not updated"
+            "example": "Category not found"
           }
         }
       },
@@ -1281,6 +1265,27 @@
           "password": {
             "type": "string",
             "example": "password"
+          }
+        }
+      },
+      "TaskCreateRequest":{
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name_one"
+          },
+          "description": {
+            "type": "string",
+            "example": "description_one"
+          },
+          "category":{
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "Срочные задачи"
+              }
+            },
+            "type": "object"
           }
         }
       }
