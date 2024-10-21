@@ -482,7 +482,7 @@
       }
     },
     "/api/tasks/{task_id_to_update}": {
-      "post": {
+      "patch": {
         "tags": [
           "Task"
         ],
@@ -502,34 +502,10 @@
         ],
         "requestBody": {
           "description": "Input data format",
-          "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "name one"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "description one"
-                  },
-                  "price": {
-                    "type": "string",
-                    "example": "5.55"
-                  },
-                  "category_id": {
-                    "type": "integer",
-                    "example": "4"
-                  },
-                  "main_image": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "The file of main image to be uploaded"
-                  }
-                }
+                "$ref": "#/components/schemas/TaskUpdateRequest"
               }
             }
           }
@@ -1287,6 +1263,31 @@
           "description": {
             "type": "string",
             "example": "description_one"
+          },
+          "category":{
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "Срочные задачи"
+              }
+            },
+            "type": "object"
+          }
+        }
+      },
+      "TaskUpdateRequest":{
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name_one"
+          },
+          "description": {
+            "type": "string",
+            "example": "description_one"
+          },
+          "status": {
+            "type": "string",
+            "example": "DONE"
           },
           "category":{
             "properties": {
