@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Services\ResponseService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -43,11 +45,16 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+
+        $this->renderable(function (Throwable $e, $request) {
+            if ($request->is('api/*') ) {
+                $responseService = App::make(ResponseService::class);
+                return $responseService->errorResponse('Something went wrong', 500);
+            }
+        });
+
         $this->reportable(function (Throwable $e) {
-            dd($e);
-//            if(is_a($e ,\HttpException::class)){
-//                return new JsonResponse($e->getMessage(), 403);
-//            }
+
         });
     }
 }
