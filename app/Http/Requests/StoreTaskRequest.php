@@ -29,10 +29,6 @@ class StoreTaskRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' =>  'required|string|max:255',
-            'status' =>  [
-                'sometimes',
-                Rule::in([(CategoryStatusType::IN_PROGRESS)->name, (CategoryStatusType::DONE)->name])
-            ],
             'category' =>  'sometimes',
             'category.id' =>  'sometimes|numeric|min:1',
             'category.type' =>  'sometimes|string|max:255',

@@ -59,11 +59,36 @@ class TaskService
 
     public function store(StoreTaskRequest $request)
     {
-        Task::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-        return $this->responseService->successResponse('Task created', 201);
+        $createConfig = $request->all();
+        $categoryFromRequest = $request ?->get('category');
+
+        if (!is_null($categoryFromRequest)) {
+            unset($createConfig['category']);
+        }
+
+        if (!is_null($categoryFromRequest)) {
+
+            if(sizeof($categoryFromRequest) > 0) {
+
+                $category = Category::where(key($categoryFromRequest), current($categoryFromRequest))->first();
+
+                if ($category) {
+                    $createConfig['category_id'] = $category->id;
+                } else {
+                    return $this->responseService->errorResponse('Category not found', 404);
+                }
+            } else {
+                $createConfig['category_id'] = null;
+            }
+        }
+
+        $task = Task::create($createConfig);
+
+        if (!$task) {
+            return $this->responseService->errorResponse('Task not found', 404);
+        } else {
+            return $this->responseService->successResponse('Task created', 200);
+        }
     }
 
     public function show(string $id)
@@ -139,18 +164,4 @@ class TaskService
             return $this->responseService->errorResponse('Task not found', 404);
         }
     }
-
-//    public function attacheCategory(string $id, string $categoryId)
-//    {
-//        $task = Task::where('id', $id)->update([
-//            'category_id' => $categoryId
-//        ]);
-//
-//        if ($task) {
-//            return $this->responseService->successResponse('Category attached', 200);
-//        } else {
-//            return $this->responseService->errorResponse('Task not found', 404);
-//        }
-//    }
-
 }
