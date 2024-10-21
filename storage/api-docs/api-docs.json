@@ -45,7 +45,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -65,9 +65,9 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
-                      "type": "boolean",
-                      "example": "false"
+                    "status": {
+                      "type": "string",
+                      "example": "error"
                     },
                     "message": {
                       "type": "string",
@@ -92,20 +92,20 @@
         }
       }
     },
-    "/api/signin":{
+    "/api/auth/login":{
       "post": {
         "tags": [
           "Auth"
         ],
-        "summary": "Sign in of user.",
-        "description": "Sign in of user.",
+        "summary": "Login.",
+        "description": "Login of user.",
         "operationId": "515c07631f88ee1a20c5c3cd303b320f",
         "requestBody": {
           "description": "Input data format",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignInRequest"
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
@@ -118,13 +118,17 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
-                      "type": "boolean",
-                      "example": "true"
+                    "status": {
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
-                      "example": "User has signed in"
+                      "example": "Successfully logged in"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "ADMIN"
                     },
                     "access_token": {
                       "type": "string",
@@ -134,9 +138,9 @@
                       "type": "string",
                       "example":  "bearer"
                     },
-                    "expires_in_minutes": {
+                    "expires_in": {
                       "type": "integer",
-                      "example":  60
+                      "example":  3600
                     }
                   },
                   "type": "object"
@@ -150,9 +154,9 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
-                      "type": "boolean",
-                      "example": "false"
+                    "status": {
+                      "type": "string",
+                      "example": "error"
                     },
                     "message": {
                       "type": "string",
@@ -170,13 +174,13 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
-                      "type": "boolean",
-                      "example": "false"
+                    "status": {
+                      "type": "string",
+                      "example": "error"
                     },
                     "message": {
                       "type": "string",
-                      "example": "User has not signed in."
+                      "example": "Unauthorized."
                     }
                   },
                   "type": "object"
@@ -212,7 +216,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -304,7 +308,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -377,7 +381,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -553,7 +557,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -583,9 +587,9 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
-                      "type": "boolean",
-                      "example": "false"
+                    "status": {
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
@@ -626,7 +630,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -695,7 +699,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -774,7 +778,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "Success": {
+                    "status": {
                       "type": "boolean",
                       "example": "true"
                     },
@@ -1146,9 +1150,9 @@
       },
       "InternalServerError": {
         "properties": {
-          "Success": {
-            "type": "boolean",
-            "example": "false"
+          "status": {
+            "type": "string",
+            "example": "error"
           },
           "message": {
             "type": "string",
@@ -1197,7 +1201,7 @@
         "properties": {
           "email": {
             "type": "string",
-            "example": "admin@gamil.com"
+            "example": "admin@gmail.com"
           },
           "password": {
             "type": "string",
@@ -1209,15 +1213,15 @@
           }
         }
       },
-      "SignInRequest":{
+      "LoginRequest":{
         "properties": {
           "email": {
             "type": "string",
-            "example": "admin@gamil.com"
+            "example": "alex@gmail.com"
           },
           "password": {
             "type": "string",
-            "example": "qwertyqwerty"
+            "example": "password"
           }
         }
       }
