@@ -414,7 +414,7 @@
           {
             "name": "task_id_to_show",
             "in": "path",
-            "description": "Update task",
+            "description": "Show task",
             "required": true,
             "schema": {
               "type": "integer"
@@ -429,8 +429,8 @@
                 "schema": {
                   "properties": {
                     "status": {
-                      "type": "boolean",
-                      "example": "true"
+                      "type": "string",
+                      "example": "success"
                     },
                     "message": {
                       "type": "string",
@@ -454,6 +454,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskNotFound"
                 }
               }
             }
