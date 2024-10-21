@@ -1220,6 +1220,79 @@
           }
         }
       }
+    },
+    "/api/users/{email}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user.",
+        "description": "Delete user.",
+        "operationId": "515c07631f88ee1a23c5c6cd383d920f",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Delete user by email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User deleted"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserNotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
