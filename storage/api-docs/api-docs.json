@@ -704,8 +704,81 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Create category.",
+        "description": "Creates new category.",
+        "operationId": "515c07631f88ee1a20c2c6cd303b927f",
+        "requestBody": {
+          "description": "Input data format",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category created"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryErrorValidation"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
       }
     },
+//    "/api/categories": {
+//
+//    },
     "/api/categories/{category_id_to_show}": {
       "get": {
         "tags": [
@@ -748,89 +821,6 @@
                     }
                   },
                   "type": "object"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalServerError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/categories/create": {
-      "post": {
-        "tags": [
-          "Category"
-        ],
-        "summary": "Create category.",
-        "description": "Creates new category.",
-        "operationId": "515c07631f88ee1a20c2c6cd303b927f",
-        "requestBody": {
-          "description": "Input data format",
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "name one"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "description one"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "status": {
-                      "type": "boolean",
-                      "example": "true"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Category created"
-                    }
-                  },
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryErrorValidation"
                 }
               }
             }
@@ -1130,9 +1120,9 @@
       },
       "CategoryErrorValidation": {
         "properties": {
-          "Success": {
+          "status": {
             "type": "boolean",
-            "example": "false"
+            "example": "success"
           },
           "message": {
             "type": "string",
@@ -1289,6 +1279,18 @@
               }
             },
             "type": "object"
+          }
+        }
+      },
+      "CategoryCreateRequest":{
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name_one"
+          },
+          "type": {
+            "type": "string",
+            "example": "type_one"
           }
         }
       }

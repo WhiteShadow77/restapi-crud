@@ -34,7 +34,7 @@ class CategoryService
             'name' => $request->name,
             'type' => $request->type,
         ]);
-        return $this->responseService->successResponse('Category created', 201);
+        return $this->responseService->successResponse('Category created', 200);
     }
 
     public function show(string $id)
