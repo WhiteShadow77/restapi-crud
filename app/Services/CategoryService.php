@@ -63,9 +63,16 @@ class CategoryService
         } else {
             if(Gate::allows('update', $category)) {
 
-                $updateConfig = current($request->all());
-                $category->update([key($updateConfig) => $updateConfig]);
-                return $this->responseService->successResponse('Category updated', 200);
+                if(sizeof($request->all()) == 0){
+
+                    $this->responseService->errorResponseWithException('Request must not be empty');
+
+                } else {
+
+                    $firstRequestItem = current($request->all());
+                    $category->update([key($request->all()) => $firstRequestItem]);
+                    return $this->responseService->successResponse('Category updated', 200);
+                }
 
             } else {
 
