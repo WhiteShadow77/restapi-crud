@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Services\ResponseService;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -22,7 +25,16 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $description = $validator->errors()->first();
+
+        $responseService = App::make(ResponseService::class);
+        $responseService->errorResponseWithException($description);
     }
 }

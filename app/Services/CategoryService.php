@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Category;
+namespace App\Services;
 
 
 use App\Http\Requests\StoreCategoryRequest;
@@ -10,7 +10,7 @@ use App\Services\ResponseService;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Gate;
 
-class CategoryService implements CategoryResourceControllerInterface
+class CategoryService
 {
     private ResponseService $responseService;
 
@@ -26,11 +26,6 @@ class CategoryService implements CategoryResourceControllerInterface
             CategoryResource::class,
             Category::all()
         );
-    }
-
-    public function create()
-    {
-        return $this->responseService->errorResponse('Method not allowed', 405);
     }
 
     public function store(StoreCategoryRequest $request)
@@ -57,11 +52,6 @@ class CategoryService implements CategoryResourceControllerInterface
         }
     }
 
-    public function edit(string $id)
-    {
-        return $this->responseService->errorResponse('Method not allowed', 405);
-    }
-
     public function update(UpdateCategoryRequest $request, string $id)
     {
         $category = Category::find($id);
@@ -73,7 +63,8 @@ class CategoryService implements CategoryResourceControllerInterface
         } else {
             if(Gate::allows('update', $category)) {
 
-                $category->update($request->all());
+                $updateConfig = current($request->all());
+                $category->update([key($updateConfig) => $updateConfig]);
                 return $this->responseService->successResponse('Category updated', 200);
 
             } else {

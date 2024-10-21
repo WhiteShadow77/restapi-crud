@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Task;
+namespace App\Services;
 
 
 use App\Http\Requests\StoreTaskRequest;
@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use App\Enums\CategoryStatusType;
 use Illuminate\Support\Facades\DB;
 
-class TaskService //implements TaskResourceControllerInterface
+class TaskService
 {
     private ResponseService $responseService;
 
@@ -57,11 +57,6 @@ class TaskService //implements TaskResourceControllerInterface
         }
     }
 
-    public function create()
-    {
-        return $this->responseService->errorResponse('Method not allowed', 405);
-    }
-
     public function store(StoreTaskRequest $request)
     {
         Task::create([
@@ -84,11 +79,6 @@ class TaskService //implements TaskResourceControllerInterface
         } else {
             return $this->responseService->errorResponse('Task not found', 404);
         }
-    }
-
-    public function edit(string $id)
-    {
-        return $this->responseService->errorResponse('Method not allowed', 405);
     }
 
     public function update(UpdateTaskRequest $request, string $id)
@@ -150,17 +140,17 @@ class TaskService //implements TaskResourceControllerInterface
         }
     }
 
-    public function attacheCategory(string $id, string $categoryId)
-    {
-        $task = Task::where('id', $id)->update([
-            'category_id' => $categoryId
-        ]);
-
-        if ($task) {
-            return $this->responseService->successResponse('Category attached', 200);
-        } else {
-            return $this->responseService->errorResponse('Task not found', 404);
-        }
-    }
+//    public function attacheCategory(string $id, string $categoryId)
+//    {
+//        $task = Task::where('id', $id)->update([
+//            'category_id' => $categoryId
+//        ]);
+//
+//        if ($task) {
+//            return $this->responseService->successResponse('Category attached', 200);
+//        } else {
+//            return $this->responseService->errorResponse('Task not found', 404);
+//        }
+//    }
 
 }

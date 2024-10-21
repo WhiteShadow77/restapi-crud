@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Models\Category;
-use App\Services\Category\CategoryResourceControllerInterface;
-use App\Services\Category\CategoryService;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller implements CategoryResourceControllerInterface
+class CategoryController extends Controller
 {
     private CategoryService $categoryService;
 
@@ -17,21 +15,12 @@ class CategoryController extends Controller implements CategoryResourceControlle
     {
         $this->categoryService = $categoryService;
     }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         return $this->categoryService->index();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return $this->categoryService->create();
     }
 
     /**
@@ -48,14 +37,6 @@ class CategoryController extends Controller implements CategoryResourceControlle
     public function show(string $id)
     {
         return $this->categoryService->show($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        return $this->categoryService->edit($id);
     }
 
     /**

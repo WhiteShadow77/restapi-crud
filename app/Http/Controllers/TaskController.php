@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Services\Task\TaskResourceControllerInterface;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
-use App\Services\Task\TaskService;
 
-class TaskController extends Controller //implements TaskResourceControllerInterface
+class TaskController extends Controller
 {
     private TaskService $taskService;
 
@@ -23,14 +21,6 @@ class TaskController extends Controller //implements TaskResourceControllerInter
     public function index(Request $request)
     {
         return $this->taskService->index($request);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return $this->taskService->create();
     }
 
     /**
@@ -50,14 +40,6 @@ class TaskController extends Controller //implements TaskResourceControllerInter
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        return $this->taskService->edit($id);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateTaskRequest $request, string $id)
@@ -71,10 +53,5 @@ class TaskController extends Controller //implements TaskResourceControllerInter
     public function destroy(string $id)
     {
         return $this->taskService->destroy($id);
-    }
-
-    public function attacheCategory(string $id, string $categoryId)
-    {
-        return $this->taskService->attacheCategory($id, $categoryId);
     }
 }

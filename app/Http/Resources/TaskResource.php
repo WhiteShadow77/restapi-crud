@@ -14,15 +14,30 @@ class TaskResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $category = [];
+
+        if(!is_null($this?->category_type)){
+            $category['type'] = $this->category_type;
+        } else {
+            if(!is_null($this->category?->type)) {
+                $category['type'] = $this->category ?->type;
+            }
+        }
+
+        if(!is_null($this?->category_name)){
+            $category['name'] = $this->category_name;
+        } else {
+            if(!is_null($this->category?->name)){
+                $category['name'] = $this->category?->name;
+            }
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'status' => is_null($this->done_at) ? 'IN_PROGRESS' : 'DONE',
-            'category' => [
-                'type' => !is_null($this?->category_type) ? $this->category_type : $this->category->type,
-                'name' => !is_null($this?->category_name) ? $this->category_name : $this->category->name,
-            ],
+            'category' => $category,
             'created at' => $this->created_at,
             'updated at' => $this->updated_at
         ];

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Services\ResponseService;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 
 class LoginRequest extends FormRequest
 {
@@ -22,7 +25,16 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:6',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $description = $validator->errors()->first();
+
+        $responseService = App::make(ResponseService::class);
+        $responseService->errorResponseWithException($description);
     }
 }

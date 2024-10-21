@@ -32,8 +32,8 @@ Route::group(['middleware' => 'jwt', 'prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'jwt'], function () {
 
-    Route::resource('tasks', TaskController::class);
-    Route::resource('categories', CategoryController::class);
+    Route::apiResource('tasks', TaskController::class);
+    Route::apiResource('categories', CategoryController::class);
 
     Route::get('users', [UserController::class, 'getUsers'])->middleware('admin');
     Route::get('users/tasks', [UserController::class, 'getUsersWithTasks'])->middleware('admin');
